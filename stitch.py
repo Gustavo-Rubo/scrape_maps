@@ -2,6 +2,8 @@ from PIL import Image, ImageOps
 from os import path
 from glob import glob
 
+restitch_existing = False
+
 def merge_images_z5(imgs):
     l = imgs[0].size[0]
     w = l * 24
@@ -30,20 +32,26 @@ def merge_images_z1(imgs):
 
 
 for folder in glob('raw/z5/*'):
-    stitches = []
-    for file in sorted(glob(path.join(folder, '*'))):
-        img = Image.open(file)
-        stitches.append(img)
-    
-    merge_images_z5(stitches).save(path.join('stitched', 'z5', f'{folder.split("/")[-1]}.jpeg'), compress_level=7)
+    stitched_file_name = path.join('stitched', 'z5', f'{folder.split("/")[-1]}.jpeg')
+
+    if restitch_existing or not path.exists(stitched_file_name):
+        stitches = []
+        for file in sorted(glob(path.join(folder, '*'))):
+            img = Image.open(file)
+            stitches.append(img)
+        
+        merge_images_z5(stitches).save(stitched_file_name, compress_level=7)
 
 
 for folder in glob('raw/z1/*'):
-    stitches = []
-    for file in sorted(glob(path.join(folder, '*'))):
-        img = Image.open(file)
-        stitches.append(img)
+    stitched_file_name = path.join('stitched', 'z1', f'{folder.split("/")[-1]}.jpeg')
 
-    merge_images_z1(stitches).save(path.join('stitched', 'z1', f'{folder.split("/")[-1]}.jpeg'), compress_level=7)
+    if restitch_existing or not path.exists(stitched_file_name):
+        stitches = []
+        for file in sorted(glob(path.join(folder, '*'))):
+            img = Image.open(file)
+            stitches.append(img)
+
+        merge_images_z1(stitches).save(stitched_file_name, compress_level=7)
 
 
