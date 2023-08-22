@@ -4,7 +4,7 @@ import json
 
 panoids = []
 
-with open('www.google.com_Archive [23-08-21 02-32-44].har', 'r') as f:
+with open('sample.har', 'r') as f:
     data = json.loads(f.read())
 
 for entry in data['log']['entries']:
