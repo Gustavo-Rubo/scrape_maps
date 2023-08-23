@@ -20,6 +20,19 @@ def merge_images_z5(imgs):
 
     return im
 
+def merge_images_z4(imgs):
+    d_w = len(imgs)//4
+    l = imgs[0].size[0]
+    w = l * d_w
+    h = l * 4
+    im = Image.new("RGB", (w, h))
+
+    for j in range(4):
+        for i in range(d_w):
+            im.paste(imgs[i+j*d_w], (i*l, j*l))
+
+    return im
+
 
 def merge_images_z1(imgs):
     l = imgs[0].size[0]
@@ -30,28 +43,24 @@ def merge_images_z1(imgs):
     
     return im
 
-
-for folder in glob('raw/z5/*'):
-    stitched_file_name = path.join('stitched', 'z5', f'{folder.split("/")[-1]}.jpeg')
-
-    if restitch_existing or not path.exists(stitched_file_name):
-        stitches = []
-        for file in sorted(glob(path.join(folder, '*'))):
-            img = Image.open(file)
-            stitches.append(img)
+for z in [1, 4, 5]:
+    for i, folder in enumerate(glob(f'raw/z{z}/*')):
+        print(f'{i}/{len(glob(f"raw/z{z}/*"))}')
         
-        merge_images_z5(stitches).save(stitched_file_name, compress_level=7)
+        stitched_file_name = path.join('stitched', f'z{z}', f'{folder.split("/")[-1]}.jpeg')
 
-
-for folder in glob('raw/z1/*'):
-    stitched_file_name = path.join('stitched', 'z1', f'{folder.split("/")[-1]}.jpeg')
-
-    if restitch_existing or not path.exists(stitched_file_name):
-        stitches = []
-        for file in sorted(glob(path.join(folder, '*'))):
-            img = Image.open(file)
-            stitches.append(img)
-
-        merge_images_z1(stitches).save(stitched_file_name, compress_level=7)
-
-
+        if restitch_existing or not path.exists(stitched_file_name):
+            stitches = []
+            for file in sorted(glob(path.join(folder, '*'))):
+                img = Image.open(file)
+                stitches.append(img)
+            
+            if z == 1:
+                if len(stitches) == 2:
+                    merge_images_z1(stitches).save(stitched_file_name, compress_level=7)
+            elif z == 4:
+                if len(stitches) == 56:
+                    merge_images_z4(stitches).save(stitched_file_name, compress_level=7)
+            else:
+                if len(stitches) == 96:
+                    merge_images_z5(stitches).save(stitched_file_name, compress_level=7)
