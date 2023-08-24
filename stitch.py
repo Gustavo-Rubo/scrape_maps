@@ -50,7 +50,11 @@ for z in [1, 4, 5]:
 
         if restitch_existing or not path.exists(stitched_file_name):
             stitches = []
-            for file in sorted(glob(path.join(folder, '*'))):
+            files = sorted(glob(path.join(folder, '*')))
+            if len(files) == 0:
+                continue
+            
+            for file in files:
                 img = Image.open(file)
                 stitches.append(img)
             
@@ -58,8 +62,8 @@ for z in [1, 4, 5]:
                 if len(stitches) == 2:
                     merge_images_z1(stitches).save(stitched_file_name, compress_level=7)
             elif z == 4:
-                y = int(path.split(file)[1][4:6])
-                x = int(path.split(file)[1][8:10])
+                y = int(path.split(files[-1])[1][4:6])
+                x = int(path.split(files[-1])[1][8:10])
                 if len(stitches)  == (x+1)*(y-1):
                     merge_images_z4(stitches, x+1, y-1).save(stitched_file_name, compress_level=7)
             else:
