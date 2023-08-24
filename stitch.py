@@ -20,16 +20,15 @@ def merge_images_z5(imgs):
 
     return im
 
-def merge_images_z4(imgs):
-    d_w = len(imgs)//4
+def merge_images_z4(imgs, x, y):
     l = imgs[0].size[0]
-    w = l * d_w
-    h = l * 4
+    w = l * x
+    h = l * y
     im = Image.new("RGB", (w, h))
 
-    for j in range(4):
-        for i in range(d_w):
-            im.paste(imgs[i+j*d_w], (i*l, j*l))
+    for j in range(y):
+        for i in range(x):
+            im.paste(imgs[i+j*x], (i*l, j*l))
 
     return im
 
@@ -45,7 +44,7 @@ def merge_images_z1(imgs):
 
 for z in [1, 4, 5]:
     for i, folder in enumerate(glob(f'raw/z{z}/*')):
-        print(f'{i}/{len(glob(f"raw/z{z}/*"))}')
+        print(f'{i+1}/{len(glob(f"raw/z{z}/*"))}')
         
         stitched_file_name = path.join('stitched', f'z{z}', f'{folder.split("/")[-1]}.jpeg')
 
@@ -59,8 +58,10 @@ for z in [1, 4, 5]:
                 if len(stitches) == 2:
                     merge_images_z1(stitches).save(stitched_file_name, compress_level=7)
             elif z == 4:
-                if len(stitches) == 56:
-                    merge_images_z4(stitches).save(stitched_file_name, compress_level=7)
+                y = int(path.split(file)[1][4:6])
+                x = int(path.split(file)[1][8:10])
+                if len(stitches)  == (x+1)*(y-1):
+                    merge_images_z4(stitches, x+1, y-1).save(stitched_file_name, compress_level=7)
             else:
                 if len(stitches) == 96:
                     merge_images_z5(stitches).save(stitched_file_name, compress_level=7)
