@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+   integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+   integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+   window.onload = function () {
+      // https://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
+      const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+         const byteCharacters = atob(b64Data);
+         const byteArrays = [];
+
+         for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+               byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+         }
+
+         const blob = new Blob(byteArrays, { type: contentType });
+         return blob;
+      }
+
+
+      document.getElementById('frm1').onsubmit = async function (e) {
+         e.preventDefault()
+
+         el = document.getElementById("frm1").elements;
+         submit_text = el[0].value
+         data = { 'search': submit_text }
+
+         const response = await fetch('/', {
+            'method': 'POST',
+            'credentials': "omit",
+            'headers': {
+               "Content-Type": "application/json",
+            },
+            'body': JSON.stringify(data),
+         });
+
+         const myJson = await response.json();
+         this.myJson = myJson
+
+         markers.clearLayers();
+         myJson.forEach(function (item, index) {
+            var marker = L.marker([item.lat, item.long]);
+            var blob = b64toBlob(item['thumb_data'].slice(2, -1), { type: 'image/jpg' })
+            var thumb_url = URL.createObjectURL(blob);
+
+            marker.bindPopup("<img class='marker_img' src='" + thumb_url + "'>");
+            markers.addLayer(marker);
+         });
+         return false
+      }
+   }
+</script>
+
+<div class="container">
+   <div class="row h-100 m-5">
+      <div class="col-md-4">
+         <form id="frm1" name="frm1" method="post">
+            <input type="text" id="search" name="search">
+            <input type="submit" value="Submit">
+         </form>
+         <div>
+            sugestões: exclusiv, proibido, descarga, oceano, MULTILIXO, CASA DAS CALDEIRAS
+         </div>
+      </div>
+      <div class="col-md-8" id="map"></div>
+   </div>
+</div>
+
+<style>
+   #map {
+      height: 600px;
+   }
+
+   .marker_img {
+      width: 100%;
+   }
+
+   .leaflet-popup-content {
+      width: 200px !important;
+   }
+</style>
+
+<script>
+
+   var map = L.map('map').setView([-23.55873855243587, -46.72968100025308], 13);
+   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+   }).addTo(map);
+
+   var markers = L.layerGroup().addTo(map);
+
+</script>
