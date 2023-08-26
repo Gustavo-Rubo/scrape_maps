@@ -1,10 +1,10 @@
-import pytesseract
-import numpy as np
-from glob import glob
-from os import path
-from multiprocessing import Pool
 import json
 import time
+import pytesseract
+import numpy as np
+from os import path
+from glob import glob
+from multiprocessing import Pool
 
 reprocess_existing = False
 
