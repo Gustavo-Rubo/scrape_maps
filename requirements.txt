@@ -1,3 +1,5 @@
 pytesseract
 numpy
 Pillow
+easyocr
+flask

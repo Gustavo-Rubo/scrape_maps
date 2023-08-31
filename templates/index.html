@@ -56,7 +56,8 @@
             var blob = b64toBlob(item['thumb_data'].slice(2, -1), { type: 'image/jpg' })
             var thumb_url = URL.createObjectURL(blob);
 
-            marker.bindPopup("<img class='marker_img' src='" + thumb_url + "'>");
+            marker.bindPopup("<a href='full_pano/" + item['thumb_file'] + "'>" +
+               "<img class='marker_img' src='" + thumb_url + "'></a>");
             markers.addLayer(marker);
          });
          return false
@@ -72,7 +73,7 @@
             <input type="submit" value="Submit">
          </form>
          <div>
-            sugestões: exclusiv, proibido, descarga, oceano, MULTILIXO, CASA DAS CALDEIRAS
+            sugestões: exclusiv, cicl, proibido, descarga, oceano, MULTILIXO, CASA DAS CALDEIRAS
          </div>
       </div>
       <div class="col-md-8" id="map"></div>
