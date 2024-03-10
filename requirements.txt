@@ -3,3 +3,8 @@ numpy
 Pillow
 easyocr
 flask
+psycopg2-binary
+flask-sqlalchemy
+Flask-Migrate
+python-dotenv
+Flask-Script

@@ -1,39 +1,69 @@
 import json
 import base64
 import numpy as np
-from os import path
+from os import path, getenv
 from flask import Flask, jsonify, request, render_template, send_from_directory
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# from models import *
+
 
 app = Flask(__name__)
 
-with open('database.json', 'r') as f:
-    db = json.load(f)
-    db = np.array(db)
+env_config = getenv("APP_SETTINGS", "config.DevelopmentConfig")
+app.config.from_object(env_config)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    
+db = SQLAlchemy(app)
+
+@app.route('/')
+def hello():
+    return "Hello World!"
 
 
-@app.route('/full_pano/<path:path>')
-def send_pano(path):
-    return send_from_directory('stitched/z5', path)
+@app.route('/<name>')
+def hello_name(name):
+    return "Hello {}!".format(name)
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'GET':
-        return render_template('index.html')
-    elif request.method == 'POST':
+if __name__ == '__main__':
+    app.run()
 
-        data = request.json
-        text = data['search']
 
-        res = []
-        if text != '':
-            # TODO: better search function
-            res = db[[str.lower(text) in str.lower(
-                ' '.join(d['ocr'])) for d in db]]
+# with open('database.json', 'r') as f:
+#     db = json.load(f)
+#     db = np.array(db)
 
-            for r in res:
-                with open(path.join('stitched', 'z1', r['thumb_file']), 'rb') as f:
-                    thumb = f.read()
-                    r['thumb_data'] = str(base64.b64encode(thumb))
 
-        return jsonify(list(res))
+# @app.route('/full_pano/<path:path>')
+# def send_pano(path):
+#     return send_from_directory('stitched/z5', path)
+
+
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     if request.method == 'GET':
+#         return render_template('index.html')
+#     elif request.method == 'POST':
+
+#         data = request.json
+#         text = data['search']
+
+#         res = []
+#         if text != '':
+#             # TODO: better search function
+#             res = db[[str.lower(text) in str.lower(
+#                 ' '.join(d['ocr'])) for d in db]]
+
+#             for r in res:
+#                 with open(path.join('stitched', 'z1', r['thumb_file']), 'rb') as f:
+#                     thumb = f.read()
+#                     r['thumb_data'] = str(base64.b64encode(thumb))
+
+#         return jsonify(list(res))
+
+
+ 
