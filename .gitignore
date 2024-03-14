@@ -1,2 +1,4 @@
 raw/
 stitched/
+backup/
+.env
