@@ -1,3 +1,5 @@
+# acho que não preciso desse arquivo
+
 import os
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand

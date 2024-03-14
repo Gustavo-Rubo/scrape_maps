@@ -8,3 +8,5 @@ flask-sqlalchemy
 Flask-Migrate
 python-dotenv
 Flask-Script
+piexif
+pandas

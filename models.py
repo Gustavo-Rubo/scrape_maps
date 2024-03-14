@@ -54,6 +54,7 @@ class Micro(TimestampMixin, db.Model):
     nome:Mapped[str] = mapped_column(db.String())
     panoid:Mapped[str] = mapped_column(db.String())
     origem:Mapped[str] = mapped_column(db.String())
+    arquivo_original:Mapped[str] = mapped_column(db.String())
     # lat
     # long
     # palavras_chave
@@ -65,12 +66,14 @@ class Micro(TimestampMixin, db.Model):
     macros:Mapped[List['Macro']] = relationship(back_populates='micros')
     submacros:Mapped[List['Macro']] = relationship(back_populates='micros')
 
-    def __init__(self, nome, panoid, origem, lat, long):
-        self.nome = nome
-        self.panoid = panoid
+    def __init__(self, origem, lat, long, arquivo_original, ocr):
+        # self.nome = nome
+        # self.panoid = panoid
         self.origem = origem
         self.lat = lat
         self.long = long
+        self.arquivo_original = arquivo_original
+        self.ocr = ocr
 
     def __repr__(self):
         return f"<Micro {self.nome} em macros {[m.nome for m in self.macros]}>"

@@ -2,3 +2,5 @@ raw/
 stitched/
 backup/
 .env
+*.pyc
+migrations/
