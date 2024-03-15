@@ -58,7 +58,7 @@
 
             marker.bindPopup("<div><a href='image/" + item['file'] + "'>" +
                "<img class='marker_img' src='" + thumb_url + "'></a>" +
-               "<p>" + '; '.join(item["ocr"]) + '</p></div>');
+               "<p>" + item["ocr"].join('; ') + '</p></div>');
             markers.addLayer(marker);
          });
          return false
