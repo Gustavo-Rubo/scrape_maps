@@ -36,7 +36,7 @@ with open(path.join('data', 'database.json'), 'r') as f:
 
 @app.route('/image/<path:path>')
 def send_image(path):
-    return send_from_directory('stitched/z5', path)
+    return send_from_directory('images', path)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -55,7 +55,7 @@ def index():
                 ' '.join(d['ocr'])) for d in db]]
 
             for r in res:
-                with open(path.join('stitched', 'z1', r['file']), 'rb') as f:
+                with open(path.join('thumbs', r['file']), 'rb') as f:
                     thumb = f.read()
                     r['thumb_data'] = str(base64.b64encode(thumb))
 
