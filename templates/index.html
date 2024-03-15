@@ -56,7 +56,7 @@
             var blob = b64toBlob(item['thumb_data'].slice(2, -1), { type: 'image/jpg' })
             var thumb_url = URL.createObjectURL(blob);
 
-            marker.bindPopup("<a href='full_pano/" + item['thumb_file'] + "'>" +
+            marker.bindPopup("<a href='image/" + item['file'] + "'>" +
                "<img class='marker_img' src='" + thumb_url + "'></a>");
             markers.addLayer(marker);
          });
