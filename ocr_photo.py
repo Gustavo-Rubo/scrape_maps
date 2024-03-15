@@ -41,11 +41,13 @@ def ocr(file_og):
     lat = (-1 if exif['GPSInfo'][1] == 'S' else 1) * dms_to_dec(exif['GPSInfo'][2])
     long = (-1 if exif['GPSInfo'][3] == 'W' else 1) * dms_to_dec(exif['GPSInfo'][4])
 
-    easyocr_res = easyocr_reader.readtext(np.array(img),
-        batch_size=1, detail=0, text_threshold=.6, canvas_size=canvas_size)
-    easyocr_res.extend(easyocr_reader.readtext(np.array(img.rotate(-90, expand=1)),
-        batch_size=1, detail=0, text_threshold=.6, canvas_size=canvas_size))
-    
+    try: 
+        easyocr_res = easyocr_reader.readtext(np.array(img),
+            batch_size=1, detail=0, text_threshold=.6, canvas_size=canvas_size)
+        easyocr_res.extend(easyocr_reader.readtext(np.array(img.rotate(-90, expand=1)),
+            batch_size=1, detail=0, text_threshold=.6, canvas_size=canvas_size))
+    except:
+        easyocr_res = ''
 
     return {
         'panoid': '',
