@@ -6991,8 +6991,9 @@
     "long": -46.724547972222226,
     "source": "photo",
     "file": "IMG_20240128_170131.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -9198,39 +9199,6 @@
       "E LETRAs",
       "universidade",
       "Paulo"
-    ]
-  },
-  {
-    "panoid": "",
-    "lat": -23.542027972222225,
-    "long": -46.665016,
-    "source": "photo",
-    "file": "IMG_20231223_000645.jpg",
-    "ocr": [
-      "foto",
-      "g",
-      ":",
-      "1",
-      "8",
-      "g",
-      "1",
-      "r",
-      "  ",
-      "#",
-      "8",
-      "46",
-      "45",
-      "gustavo rubo",
-      "410.315.318-07",
-      "11/12/1998",
-      "Ingresso 1 de 1",
-      "8119685",
-      "0",
-      "204401",
-      "#",
-      "Pista",
-      "Meia",
-      "R$ 50,00"
     ]
   },
   {
@@ -12267,8 +12235,9 @@
     "long": -46.719712972222226,
     "source": "photo",
     "file": "IMG_20240128_162035.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -18073,8 +18042,9 @@
     "long": -46.719878972222226,
     "source": "photo",
     "file": "IMG_20240128_161951.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -21682,8 +21652,9 @@
     "long": -46.721187,
     "source": "photo",
     "file": "IMG_20240128_161102.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -22152,8 +22123,9 @@
     "long": -46.720393972222226,
     "source": "photo",
     "file": "IMG_20240128_161329.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -25091,8 +25063,9 @@
     "long": -46.719472,
     "source": "photo",
     "file": "IMG_20240128_162137.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -26662,8 +26635,9 @@
     "long": -46.720205972222224,
     "source": "photo",
     "file": "IMG_20240128_160727.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
@@ -29264,8 +29238,9 @@
     "long": -46.715859,
     "source": "photo",
     "file": "IMG_20240218_143154.jpg",
-    "ocr": "
-    "foto","
+    "ocr": [
+      "foto"
+    ]
   },
   {
     "panoid": "",
